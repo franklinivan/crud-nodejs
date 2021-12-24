@@ -5,8 +5,10 @@ const router = express.Router();
 router.get("/",(req,res)=>{
     res.render("index",{somevalue : "locofefo"});
 });
-router.get("/services",(req,res)=>{
-    res.render("services");
+router.get("/servicios",(req,res)=>{
+    res.render("servicios");
 });
-
+router.get("/nosotros",(req,res)=>{
+    res.render("nosotros");
+});
 module.exports = router;

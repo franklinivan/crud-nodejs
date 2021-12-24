@@ -7,7 +7,7 @@ const Mascota = require("../models/mascota");
 router.get("/mascotas", async (req,res)=>{
 
     try {
-        const arrayMascotas = await Mascota.find()
+        const arrayMascotas = await Mascota.find();
         console.log(arrayMascotas);
         console.log('------------');
 
