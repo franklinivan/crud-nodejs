@@ -1,0 +1,27 @@
+<%- include("templates/head", {tituloWeb: "" }) %>
+
+    <h1>Estas en la sección Mascotas</h1>
+    <% if (arrayMascotas.length > 0) { %>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Race</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% arrayMascotas.forEach(mascota=> { %>
+                    <tr>
+                        <th scope="row"><%= mascota.id + 1 %></th>
+                        <td><%= mascota.name %></td>
+                        <td><%= mascota.race %></td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+
+    <% } %>
+
+<%- include("templates/footer") %>
