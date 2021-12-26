@@ -5,7 +5,7 @@ const app = express(); // express() es para utilizar todo lo que estamos requiri
 const port = process.env.PORT;
 
 //Para interpretar los datos que vienen de un formulario y poder procesarlo
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false})); // esto es vital.
 
 // motor de plantilla
 app.set('view engine','ejs');
@@ -17,7 +17,7 @@ app.use(express.static(__dirname + '/public')); // carpeta estática.
 app.use('/', require('./router/rutasWeb'));
 
 // Rutas admin
-app.use('/', require('./router/rutasAdmin'));
+app.use('/mascotas', require('./router/rutasAdmin'));
 
 
 // middleware

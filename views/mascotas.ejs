@@ -35,7 +35,7 @@
                         <td><%= mascota.age %> </td>
                         <td><%= mascota.sex %></td>
                         <td class="text-center">
-                            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarMascota" onclick="editarMascota('<%= JSON.stringify(mascota) %>')" >
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarMascota" id="btnEditar" data-info="<%= JSON.stringify(mascota) %>">
                                 Editar
                             </a>
                             <button type="button" class="btn btn-danger">Quitar</button>
@@ -99,19 +99,6 @@
         </div>
     </div>
 
-    <!-- Script para editar mascota y enviar los datos al modal -->
-    <script>
-        // función onclick
-        function editarMascota(mascotaSeleccionada) {
-            mascota = JSON.parse(mascotaSeleccionada); // Se parsea los datos de stringify a JSON.
-            console.log(mascota);
-            document.getElementById('name').value = mascota.name; // se pasa el dato al campo mediante el id.
-            document.getElementById('race').value = mascota.race;
-            document.getElementById('age').value = mascota.age;
-            document.getElementById('sex').value = mascota.sex;
-        }
-    </script>
-
     <!-- Editar mascota -->
     <div class="modal fade" id="editarMascota" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -128,7 +115,7 @@
                             <h4 class="mx-auto">Image</h4>
                         </div>
                         <div class="col-md-8">
-                            <form action="#">
+                            <form action="/mascotas/editar" method="post">
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Nombre</label>
                                     <input type="text" class="form-control" name="name" id="name" required>
@@ -161,6 +148,25 @@
         </div>
     </div>
 
-    
+    <!-- Script enviar los datos al modal -->
+    <!-- Estoy utilizando "addEventListener" en vez de "Onclick" porque vi en un video que era recomendable -->
+    <script>
+        const btnEditar = document.querySelectorAll('#btnEditar'); // capturo el los btn a través del id.
+        // recorro cada btn para agregar el addEventListener.
+        for(let i = 0; i < btnEditar.length; i++){
+            btnEditar[i].addEventListener('click', ()=>{
+                const data = btnEditar[i].dataset.info; // creo una variable data con la info (stringify) que está en el btn (data-set).
+                rellenarCampos(data); // creo una función para rellenar el modal.
+            });
+        }
+        
+        const rellenarCampos = data=>{
+            const info = JSON.parse(data); // Es importante parsear la info a JSON.
+            document.getElementById('name').value = info.name; // añado la información a través del id de los campos.
+            document.getElementById('race').value = info.race;
+            document.getElementById('age').value = info.age;
+            document.getElementById('sex').value = info.sex;
+        }
+    </script>
 
 <%- include("templates/footer") %>
