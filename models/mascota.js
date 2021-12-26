@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const mascotaSchema = new Schema({
-    name: String,
+    name: {
+        type: String,
+        unique: true
+    },
     race: String,
     sex: String,
     age: String

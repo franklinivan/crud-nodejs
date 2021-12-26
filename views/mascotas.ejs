@@ -14,7 +14,7 @@
     </div>
 
     <% if (arrayMascotas.length> 0) { %>
-
+        <% let count = 1; %> 
         <table class="table">
             <thead>
                 <tr>
@@ -29,13 +29,15 @@
             <tbody>
                 <% arrayMascotas.forEach(mascota=> { %>
                     <tr>
-                        <th scope="row"><%= mascota.id + 1 %></th>
+                        <th scope="row"><%= count ++ %></th>
                         <td><%= mascota.name %></td>
                         <td><%= mascota.race %></td>
                         <td><%= mascota.age %> </td>
                         <td><%= mascota.sex %></td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-primary">Editar</button>
+                            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarMascota" onclick="editarMascota('<%= JSON.stringify(mascota) %>')" >
+                                Editar
+                            </a>
                             <button type="button" class="btn btn-danger">Quitar</button>
                         </td>
                     </tr>
@@ -66,20 +68,23 @@
                         <div class="col-md-8">
                             <form action="/mascotas" method="post">
                                 <div class="mb-3">
-                                    <label class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <label class="form-label fw-bold">Nombre</label>
+                                    <input type="text" class="form-control" name="name" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Raza</label>
-                                    <input type="text" class="form-control" name="race">
+                                    <label class="form-label fw-bold">Raza</label>
+                                    <input type="text" class="form-control" name="race" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Edad</label>
-                                    <input type="text" class="form-control" name="age">
+                                    <label class="form-label fw-bold">Edad</label>
+                                    <input type="text" class="form-control" name="age" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Sexo</label>
-                                    <input type="text" class="form-control" name="sex">
+                                    <label class="form-label fw-bold">Sexo</label>
+                                    <select class="form-select" aria-label="Default select example" name="sex" required>
+                                        <option value="macho">Macho</option>
+                                        <option value="hembra">Hembra</option>
+                                    </select>
                                 </div>
                                 <div class="float-end">
                                     <button type="submit" class="btn btn-success">Guardar</button>
@@ -93,5 +98,69 @@
             </div>
         </div>
     </div>
+
+    <!-- Script para editar mascota y enviar los datos al modal -->
+    <script>
+        // función onclick
+        function editarMascota(mascotaSeleccionada) {
+            mascota = JSON.parse(mascotaSeleccionada); // Se parsea los datos de stringify a JSON.
+            console.log(mascota);
+            document.getElementById('name').value = mascota.name; // se pasa el dato al campo mediante el id.
+            document.getElementById('race').value = mascota.race;
+            document.getElementById('age').value = mascota.age;
+            document.getElementById('sex').value = mascota.sex;
+        }
+    </script>
+
+    <!-- Editar mascota -->
+    <div class="modal fade" id="editarMascota" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Registrar mascota</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-4 d-flex align-items-center">
+                            <h4 class="mx-auto">Image</h4>
+                        </div>
+                        <div class="col-md-8">
+                            <form action="#">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Nombre</label>
+                                    <input type="text" class="form-control" name="name" id="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Raza</label>
+                                    <input type="text" class="form-control" name="race" id="race" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Edad</label>
+                                    <input type="text" class="form-control" name="age" id="age" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Sexo</label>
+                                    <select class="form-select" aria-label="Default select example" name="sex" id="sex" required>
+                                        <option value="macho">Macho</option>
+                                        <option value="hembra">Hembra</option>
+                                    </select>
+                                </div>
+                                <div class="float-end">
+                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
 
 <%- include("templates/footer") %>
