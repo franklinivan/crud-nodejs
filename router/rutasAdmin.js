@@ -30,18 +30,27 @@ router.post('/', async (req,res)=>{
         console.log(error);
     }
 });
+// editar una mascota
+router.put('/:id', async (req,res)=>{
+    const body = req.body; // info que viene en JSON debido a utilizar el PUT.
+    const id = body.id;
 
-router.put('/editar', async(req,res)=>{
-    const body = req.body; // req.body es la info que me llega del formulario.
-    const name = req.body.name;
-    console.log(name);
     try {
-        console.log(body);
+        const mascotaEditar = await Mascota.findByIdAndUpdate(id,body);
+        // console.log(mascotaEditar);
+
+        res.json({ // respuesta en JSON.
+            status: 'true',
+            message: 'Editado'
+        });
     } catch (error) {
         console.log(error);
+        res.json({
+            status: 'false',
+            message: 'error'
+        });
     }
 });
-
 
 
 module.exports = router;
