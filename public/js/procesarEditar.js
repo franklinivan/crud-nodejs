@@ -7,7 +7,7 @@ for (let i = 0; i < btnEditar.length; i++) { // recorro cada btn para agregar el
     btnEditar[i].addEventListener('click', () => {
         const data = btnEditar[i].dataset.info; // creo una variable data con la info (stringify) que está en el btn (data-set).
         rellenarCampos(data); // función para rellenar el modal.
-        procesarInfo(data); // función que recibe la data cruda en stringify.
+        editarMascota(data); // función que recibe la data cruda en stringify.
     });
 }
 
@@ -22,7 +22,7 @@ const rellenarCampos = data => {
 
 // ----------- Aquí voy a está el código del PUT para editar -----------
 // para editar una mascota podría hacerlo con POST pero quería practicar PUT.
-const procesarInfo = data => {
+const editarMascota = data => {
     const dataRaw = JSON.parse(data); // recibo la data de la mascota en crudo y lo parseo a JSON.
     const id = dataRaw._id; // extraigo el id. Es lo que necesito.
 

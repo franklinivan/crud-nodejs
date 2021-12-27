@@ -35,10 +35,10 @@
                         <td><%= mascota.age %> </td>
                         <td><%= mascota.sex %></td>
                         <td class="text-center">
-                            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarMascota" id="btnEditar" data-info="<%= JSON.stringify(mascota) %>"> <!-- vital el strinfify -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarMascota" id="btnEditar" data-info="<%= JSON.stringify(mascota) %>"> <!-- vital el strinfify (es porque es un objeto, si fuese un solo dato no es necesario)-->
                                 Editar
-                            </a>
-                            <button type="button" class="btn btn-danger">Quitar</button>
+                            </button>
+                            <button type="button" class="btn btn-danger" id="btnEliminar" data-info="<%= mascota._id %>">Quitar</button>
                         </td>
                     </tr>
                 <% }) %>
@@ -150,5 +150,26 @@
 
     <!-- Scrip paara procesar la edición de una mascota. con PUT. -->
     <script src="/js/procesarEditar.js"></script>
+
+    <script>
+        const btnEliminar = document.querySelectorAll('#btnEliminar');
+        for(let i = 0; i < btnEliminar.length; i++){
+            btnEliminar[i].addEventListener('click', async ()=>{
+                const id = btnEliminar[i].dataset.info;
+                console.log(id);
+                try {
+                    const data = await fetch(`/mascotas/${id}`,{
+                        method: 'delete',
+                    });
+
+                    const res = await data.json();
+                    console.log(res);
+                } catch (error) {
+                    console.log(error);
+                }
+
+            });
+        }
+    </script>
 
 <%- include("templates/footer") %>

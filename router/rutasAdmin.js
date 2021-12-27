@@ -3,6 +3,7 @@ const router = express.Router();
 const Mascota = require("../models/Mascota"); //llamar al modelo.
 
 // ----------- Rutas del Administrador de mascotas -----------
+// leer las mascotas
 router.get('/', async (req,res)=>{
 
     try {
@@ -52,8 +53,26 @@ router.put('/:id', async (req,res)=>{
     }
 });
 // eliminar una mascota
-// router.delete('/:id', async (req,res)=>{
+router.delete('/:id', async (req,res)=>{
+    const id = req.params.id;
+    console.log(id);
+
+    try {
+        const mascotaEliminada = await Mascota.findByIdAndDelete(id);
+        console.log(mascotaEliminada);
+
+        res.json({
+            status: true,
+            message: 'Eliminado'
+        });
+    } catch (error) {
+        console.log(error);
+        res.json({
+            status: false,
+            message: 'error'
+        });
+    }
    
-// });
+});
 
 module.exports = router;
