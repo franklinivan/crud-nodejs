@@ -148,28 +148,9 @@
         </div>
     </div>
 
-    <!-- Scrip paara procesar la edición de una mascota. con PUT. -->
-    <script src="/js/procesarEditar.js"></script>
-
-    <script>
-        const btnEliminar = document.querySelectorAll('#btnEliminar');
-        for(let i = 0; i < btnEliminar.length; i++){
-            btnEliminar[i].addEventListener('click', async ()=>{
-                const id = btnEliminar[i].dataset.info;
-                console.log(id);
-                try {
-                    const data = await fetch(`/mascotas/${id}`,{
-                        method: 'delete',
-                    });
-
-                    const res = await data.json();
-                    console.log(res);
-                } catch (error) {
-                    console.log(error);
-                }
-
-            });
-        }
-    </script>
+    <!-- Scrip para procesar la edición de una mascota. con PUT. -->
+    <script src="/js/editarMascota.js"></script>
+    <!-- Scrip para eliminar una mascota. con DELETE. -->
+    <script src="/js/eliminarMascota.js"></script>
 
 <%- include("templates/footer") %>

@@ -54,7 +54,7 @@ router.put('/:id', async (req,res)=>{
 });
 // eliminar una mascota
 router.delete('/:id', async (req,res)=>{
-    const id = req.params.id;
+    const id = req.params.id; // el params creo que viene por el url.
     console.log(id);
 
     try {

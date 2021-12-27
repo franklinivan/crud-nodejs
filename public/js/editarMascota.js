@@ -43,11 +43,9 @@ const editarMascota = data => {
 
             const res = await data.json(); // .json() quita los valores de relleno (o eso creo).
 
-            if (res.status) {
-                window.location.href = '/mascotas'; // si todo salió bien, redirige.
-            } else {
-                console.log(res);
-            }
+            if (res.status)  window.location.href = '/mascotas'; // si todo salió bien, redirige.
+            else console.log(res);
+            
         } catch (error) {
             console.log(error);
         }
