@@ -35,10 +35,10 @@ const procesarInfo = data => {
         const sex = formularioEditar.elements['sex'].value;
 
         try {
-            const data = await fetch(`mascotas/${name}`, { // el fetch es algo que no entiendo todavía. Primer parametro, la ruta.
+            const data = await fetch(`mascotas/${id}`, { // el fetch es algo que no entiendo todavía. Primer parametro, la ruta.
                 method: 'put',
                 headers: { 'Content-Type': 'application/json' }, // necesario para reconocer el JSON.
-                body: JSON.stringify({ id, name, race, age, sex }) // guardo los datos en body y los paso a Stringify (por alguna razón).
+                body: JSON.stringify({ name, race, age, sex }) // guardo los datos en body y los paso a Stringify (por alguna razón).
             });
 
             const res = await data.json(); // .json() quita los valores de relleno (o eso creo).

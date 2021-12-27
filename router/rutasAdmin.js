@@ -32,8 +32,8 @@ router.post('/', async (req,res)=>{
 });
 // editar una mascota
 router.put('/:id', async (req,res)=>{
+    const id = req.params.id // el params creo que viene por el url.
     const body = req.body; // info que viene en JSON debido a utilizar el PUT.
-    const id = body.id;
 
     try {
         const mascotaEditar = await Mascota.findByIdAndUpdate(id,body);
@@ -51,6 +51,9 @@ router.put('/:id', async (req,res)=>{
         });
     }
 });
-
+// eliminar una mascota
+// router.delete('/:id', async (req,res)=>{
+   
+// });
 
 module.exports = router;
