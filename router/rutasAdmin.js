@@ -1,4 +1,5 @@
 const express = require('express');
+const { connection } = require('mongoose');
 const router = express.Router();
 const Mascota = require("../models/Mascota"); //llamar al modelo.
 
@@ -29,6 +30,8 @@ router.post('/', async (req,res)=>{
         res.redirect('mascotas');
     } catch (error) {
         console.log(error);
+        console.log('---------');
+        console.log(error.code);
     }
 });
 // editar una mascota
