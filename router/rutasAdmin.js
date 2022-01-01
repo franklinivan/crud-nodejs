@@ -1,5 +1,4 @@
 const express = require('express');
-const { connection } = require('mongoose');
 const router = express.Router();
 const Mascota = require("../models/Mascota"); //llamar al modelo.
 
@@ -30,18 +29,17 @@ router.post('/', async (req,res)=>{
         res.redirect('mascotas');
     } catch (error) {
         console.log(error);
-        console.log('---------');
-        console.log(error.code);
+        if(error.code = 1100) res.redirect('mascotas');
     }
 });
 // editar una mascota
 router.put('/:id', async (req,res)=>{
-    const id = req.params.id // el params creo que viene por el url.
+    const id = req.params.id // el params viene por el url.
     const body = req.body; // info que viene en JSON debido a utilizar el PUT.
 
     try {
-        const mascotaEditar = await Mascota.findByIdAndUpdate(id,body);
-        // console.log(mascotaEditar);
+        const mascotaEditar = await Mascota.findByIdAndUpdate(id,body, {new: true}); // el {new: true} es para que al terminar la operación devuelva el valor actualizado y no el que encontró con el findbyid.
+        console.log(mascotaEditar);
 
         res.json({ // respuesta en JSON.
             status: 'true',
@@ -49,6 +47,9 @@ router.put('/:id', async (req,res)=>{
         });
     } catch (error) {
         console.log(error);
+        console.log('---------');
+        console.log(error.code);
+        console.log(error.name);
         res.json({
             status: 'false',
             message: 'error'
@@ -57,8 +58,7 @@ router.put('/:id', async (req,res)=>{
 });
 // eliminar una mascota
 router.delete('/:id', async (req,res)=>{
-    const id = req.params.id; // el params creo que viene por el url.
-    console.log(id);
+    const id = req.params.id; // el params viene por el url.
 
     try {
         const mascotaEliminada = await Mascota.findByIdAndDelete(id);

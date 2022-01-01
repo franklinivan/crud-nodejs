@@ -26,7 +26,7 @@ app.use('/', require('./router/rutasWeb'));
 app.use('/mascotas', require('./router/rutasAdmin'));
 
 
-// middleware
+// 404
 app.use((req,res,next)=>{
     res.status(404).render('404');
 });
