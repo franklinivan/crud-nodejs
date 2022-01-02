@@ -25,7 +25,7 @@ app.use(flash());
 // variables globales con flash
 app.use((req,res,next)=>{
     app.locals.errorMascota = req.flash('errorMascota');
-    app.locals.errorMascotaEditar = req.flash('errorMascotaEditar');
+    app.locals.successMascota = req.flash('successMascota');
     
     next(); // para que no se quede en este middleware.
 })

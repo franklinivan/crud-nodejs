@@ -1,14 +1,14 @@
 <%- include("templates/head", {tituloWeb: "- Mascotas" }) %>
 
-    <!-- Mensajes de error -->
-    <% if (errorMascota.length != 0) { %>
+    <!-- Mensajes de retroalimentación -->
+    <% if (errorMascota.length !== 0) { %>
         <div class="alert alert-danger" role="alert">
             <%= errorMascota %> 
-          </div>
+        </div>
     <% } %>
-    <% if (errorMascotaEditar.length != 0) { %>
-        <div class="alert alert-danger" role="alert">
-            <%= errorMascotaEditar %> 
+    <% if (successMascota.length !== 0) { %>
+        <div class="alert alert-success" role="alert">
+            <%= successMascota %> 
           </div>
     <% } %>
 
