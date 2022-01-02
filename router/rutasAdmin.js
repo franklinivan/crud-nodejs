@@ -29,7 +29,10 @@ router.post('/', async (req,res)=>{
         res.redirect('mascotas');
     } catch (error) {
         console.log(error);
-        if(error.code = 1100) res.redirect('mascotas');
+        if (error.code == 11000){
+            req.flash('errorMascota','Ya existe una mascota con ese nombre.');
+            res.redirect('mascotas');
+        }
     }
 });
 // editar una mascota
@@ -42,16 +45,15 @@ router.put('/:id', async (req,res)=>{
         console.log(mascotaEditar);
 
         res.json({ // respuesta en JSON.
-            status: 'true',
+            status: true,
             message: 'Editado'
         });
     } catch (error) {
         console.log(error);
-        console.log('---------');
-        console.log(error.code);
-        console.log(error.name);
+
+        req.flash('errorMascota','No se puede cambiar el nombre de una mascota a uno ya existente.');
         res.json({
-            status: 'false',
+            status: false,
             message: 'error'
         });
     }
