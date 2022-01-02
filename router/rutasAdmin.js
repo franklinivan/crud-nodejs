@@ -19,6 +19,7 @@ router.get('/', async (req,res)=>{
 // crear una mascota
 router.post('/', async (req,res)=>{
     const body = req.body; // req.body es la info que me llega del formulario.
+    
     try {
         // -- esta es una forma de guardar un doc.
         // const nuevaMascota = new Mascota(body);
@@ -28,9 +29,10 @@ router.post('/', async (req,res)=>{
 
         req.flash('successMascota','Mascota creada con éxito.'); // envio el mensaje por flash.
         res.redirect('mascotas');
+
     } catch (error) {
         console.log(error);
-        if (error.code == 11000){
+        if (error.code == 11000){ // error.code 11000 es unique en schema.
             req.flash('errorMascota','Ya existe una mascota con ese nombre.'); // envio el mensaje por flash.
             res.redirect('mascotas');
         }
@@ -42,12 +44,11 @@ router.put('/:id', async (req,res)=>{
     const body = req.body; // info que viene en JSON debido a utilizar el PUT.
 
     try {
-        const mascotaEditar = await Mascota.findByIdAndUpdate(id,body, {new: true}); // el {new: true} es para que al terminar la operación devuelva el valor actualizado y no el que encontró con el findbyid.
+        const mascotaEditar = await Mascota.findByIdAndUpdate(id,body, {new: true}); 
+        // el {new: true} es para que al terminar la operación devuelva el valor actualizado y no el que encontró con el findbyid.
         console.log(mascotaEditar);
 
-        // envio el mensaje por flash.
-        // no sé el funcionamiento de cuando paso flash utilizando PUT y DELETE que responden por res.json (no por redirect).
-        req.flash('successMascota','Mascota editada con éxito.');
+        req.flash('successMascota','Mascota editada con éxito.'); // envio el mensaje por flash.
 
         res.json({ // respuesta en JSON.
             status: true,
@@ -57,7 +58,6 @@ router.put('/:id', async (req,res)=>{
         console.log(error);
 
         // valido que el error y envio el mensaje por flash.
-        // no sé el funcionamiento de cuando paso flash utilizando PUT y DELETE que responden por res.json (no por redirect).
         if(error.code == 11000) req.flash('errorMascota','No se puede cambiar el nombre de una mascota a uno ya existente.');
         
         res.json({
@@ -74,7 +74,7 @@ router.delete('/:id', async (req,res)=>{
         const mascotaEliminada = await Mascota.findByIdAndDelete(id);
         console.log(mascotaEliminada);
 
-        // no sé el funcionamiento de cuando paso flash utilizando PUT y DELETE que responden por res.json (no por redirect).
+        // envio el mensaje por flash.
         req.flash('successMascota','Mascota eliminada con éxito.');
 
         res.json({

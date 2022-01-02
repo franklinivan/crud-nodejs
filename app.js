@@ -6,12 +6,9 @@ const flash = require('connect-flash');
 const app = express(); // express() es para utilizar todo lo que estamos requiriendo.
 const port = process.env.PORT;
 
-// para leer información que viene en json desde el formulario.
-app.use(express.json());
 
-// para interpretar los datos que vienen de un formulario y poder procesarlo
-app.use(express.urlencoded({extended: false})); // esto es vital.
-
+app.use(express.json()); // para leer información que viene en json desde el formulario.
+app.use(express.urlencoded({extended: false})); // para interpretar los datos que vienen de un formulario y poder procesarlo (vital)
 // configuración necesaria para el express-session (no conozco el funcionamiento del todo).
 app.use(session({
     secret: 'secret_pets',
@@ -19,9 +16,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// flash es para enviar mensajes entre vistas (es encesario tener el express-session).
-app.use(flash());
-
+app.use(flash()); // flash es para enviar mensajes entre vistas (es encesario tener el express-session).
 // variables globales con flash
 app.use((req,res,next)=>{
     app.locals.errorMascota = req.flash('errorMascota');
@@ -41,7 +36,6 @@ app.use('/', require('./router/rutasWeb'));
 
 // Rutas admin
 app.use('/mascotas', require('./router/rutasAdmin'));
-
 
 // 404
 app.use((req,res,next)=>{
