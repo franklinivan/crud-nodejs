@@ -27,7 +27,7 @@ router.post('/', async (req,res)=>{
 
         await Mascota.create(body);
 
-        req.flash('successMascota','Mascota creada con éxito.'); // envio el mensaje por flash.
+        req.flash('successMascota','Mascota registradas con éxito.'); // envio el mensaje por flash.
         res.redirect('mascotas');
 
     } catch (error) {
