@@ -1,5 +1,5 @@
 require('dotenv').config(); // variables de entorno.
-require ('./database/mongo'); // conexión la bd.
+require ('./database/mongo');
 const express = require('express');
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -8,7 +8,7 @@ const port = process.env.PORT;
 
 
 app.use(express.json()); // para leer información que viene en json desde el formulario.
-app.use(express.urlencoded({extended: false})); // para interpretar los datos que vienen de un formulario y poder procesarlo (vital)
+app.use(express.urlencoded({extended: false})); // interpretar los datos del formulario y poder procesarlos.
 // configuración necesaria para el express-session (no conozco el funcionamiento del todo).
 app.use(session({
     secret: 'secret_pets',
@@ -18,7 +18,7 @@ app.use(session({
 
 app.use(flash()); // flash es para enviar mensajes entre vistas (es encesario tener el express-session).
 // variables globales con flash
-app.use((req,res,next)=>{
+app.use((req,_,next)=>{
     app.locals.errorMascota = req.flash('errorMascota');
     app.locals.successMascota = req.flash('successMascota');
     
@@ -38,7 +38,7 @@ app.use('/', require('./router/rutasWeb'));
 app.use('/mascotas', require('./router/rutasAdmin'));
 
 // 404
-app.use((req,res,next)=>{
+app.use((_,res,next)=>{
     res.status(404).render('404');
 });
 

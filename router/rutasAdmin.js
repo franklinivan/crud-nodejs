@@ -4,14 +4,12 @@ const Mascota = require("../models/Mascota"); //llamar al modelo.
 
 // ----------- Rutas del Administrador de mascotas -----------
 // leer las mascotas
-router.get('/', async (req,res)=>{
+router.get('/', async (_,res)=>{
 
     try {
         const arrayMascotas = await Mascota.find();
+        res.render('mascotas',{arrayMascotas});
 
-        res.render('mascotas',{
-            arrayMascotas
-        });
     } catch (error) {
         console.log(error);
     }
@@ -44,8 +42,7 @@ router.put('/:id', async (req,res)=>{
     const body = req.body; // info que viene en JSON debido a utilizar el PUT.
 
     try {
-        const mascotaEditar = await Mascota.findByIdAndUpdate(id,body, {new: true}); 
-        // el {new: true} es para que al terminar la operación devuelva el valor actualizado y no el que encontró con el findbyid.
+        const mascotaEditar = await Mascota.findByIdAndUpdate(id,body, {new: true}); // new: true para ver el nuevo.
         console.log(mascotaEditar);
 
         req.flash('successMascota','Mascota editada con éxito.'); // envio el mensaje por flash.
@@ -58,7 +55,8 @@ router.put('/:id', async (req,res)=>{
         console.log(error);
 
         // valido que el error y envio el mensaje por flash.
-        if(error.code == 11000) req.flash('errorMascota','No se puede cambiar el nombre de una mascota a uno ya existente.');
+        if(error.code == 11000) 
+            req.flash('errorMascota','No se puede cambiar el nombre de una mascota a uno ya existente.');
         
         res.json({
             status: false,
