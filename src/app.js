@@ -1,9 +1,10 @@
 require('dotenv').config(); // variables de entorno.
 require ('./database/mongo');
+
 const express = require('express');
+const app = express(); // express() es para utilizar todo lo que estamos requiriendo.
 const session = require('express-session');
 const flash = require('connect-flash');
-const app = express(); // express() es para utilizar todo lo que estamos requiriendo.
 const port = process.env.PORT || 4000;
 
 

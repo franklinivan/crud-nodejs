@@ -69,12 +69,12 @@ router.delete('/:id', async (req, res) => {
 
         // envio el mensaje por flash.
         req.flash('successMascota', 'Mascota eliminada con éxito.');
-        res.json({ status: true,  message: 'Eliminado' });
+        res.json({ error: false,  message: 'Eliminado' });
 
     } catch (error) {
 
         console.log(error);
-        res.json({ status: false,  message: 'error' });
+        res.json({ error: true,  message: 'error' });
     }
 });
 

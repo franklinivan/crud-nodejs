@@ -1,7 +1,7 @@
-const btnEliminar = document.querySelectorAll('#btnEliminar'); // capturo el btn a través del id.
-// Estoy utilizando "addEventListener" en vez de "Onclick" porque vi en un video que era recomendable.
+const btnEliminar = document.querySelectorAll('#btnEliminar');
+// "addEventListener" se usa siempre.
 
-for (let i = 0; i < btnEliminar.length; i++) { // recorro cada btn para agregar el addEventListener.
+for (let i = 0; i < btnEliminar.length; i++) {
     btnEliminar[i].addEventListener('click', async () => { 
         const id = btnEliminar[i].dataset.info; // id obtiene el id que está en el data-set del btn.
 
@@ -12,7 +12,7 @@ for (let i = 0; i < btnEliminar.length; i++) { // recorro cada btn para agregar 
 
             const res = await data.json(); // .json() quita los valores de relleno (o eso creo).
 
-            if (res.status) window.location.href = 'mascotas'; // si todo salió bien, redirige.
+            if (!res.error) window.location.href = 'mascotas'; // si todo salió bien, redirige.
             else console.log(res);
 
         } catch (error) {
