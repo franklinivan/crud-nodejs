@@ -1,12 +1,12 @@
 // Script enviar los datos al modal y editarlos a través de PUT.
-const btnEditar = document.querySelectorAll('#btnEditar'); // capturo los btn a través del id.
+const btnEditar = document.querySelectorAll('#btnEditar');
 const formularioEditar = document.getElementById('formularioEditar'); // capturar el formulario. para el PUT.
-// Estoy utilizando "addEventListener" en vez de "Onclick" porque vi en un video que era recomendable.
 
+// "addEventListener" es mejor que "Onclick".
 for (let i = 0; i < btnEditar.length; i++) { // recorro cada btn para agregar el addEventListener.
     btnEditar[i].addEventListener('click', () => {
         const data = btnEditar[i].dataset.info; // creo una variable data con la info (stringify) que está en el btn (data-set).
-        rellenarCampos(data); // función para rellenar el modal.
+        rellenarCampos(data); // rellenar el modal.
         editarMascota(data); // función que recibe la data cruda en stringify.
     });
 }
@@ -21,10 +21,8 @@ const rellenarCampos = data => {
 }
 
 // ----------- Aquí voy a está el código del PUT para editar -----------
-// para editar una mascota podría hacerlo con POST pero quería practicar PUT.
 const editarMascota = data => {
-    const dataRaw = JSON.parse(data); // recibo la data de la mascota en crudo y lo parseo a JSON.
-    const id = dataRaw._id; // extraigo el id. Es lo que necesito.
+    const { _id } = JSON.parse(data); // Extraigo el id que es lo que necesito, parseado a JSON.
 
     formularioEditar.addEventListener('submit', async e => {
         e.preventDefault(); // cuando hace clic no se recarga la pantalla, esto para procesar la info primero.
@@ -35,7 +33,7 @@ const editarMascota = data => {
         const sex = formularioEditar.elements['sex'].value;
 
         try {
-            const data = await fetch(`mascotas/${id}`, { // el fetch es algo que no entiendo todavía. Primer parametro, la ruta.
+            const data = await fetch(`mascotas/${_id}`, { // fetch, no entiendo del todo. Primer parametro, la ruta.
                 method: 'put',
                 headers: { 'Content-Type': 'application/json' }, // necesario para reconocer el JSON.
                 body: JSON.stringify({ name, race, age, sex }) // guardo los datos en body y los paso a Stringify (por alguna razón).
@@ -43,7 +41,7 @@ const editarMascota = data => {
 
             const res = await data.json(); // .json() quita los valores de relleno (o eso creo).
 
-            if (res.status) {
+            if (!res.error) { // si todo salio bien ...
                 console.log(res);
                 window.location.href = 'mascotas';
             }
@@ -51,6 +49,7 @@ const editarMascota = data => {
                 console.log(res);
                 window.location.href = 'mascotas';
             }
+
         } catch (error) {
             console.log(error);
         }
