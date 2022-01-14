@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const { Schema, model } = mongoose;
+const { Schema, model } = require('mongoose');
 
 const mascotaSchema = new Schema({
     name: {
@@ -11,7 +10,5 @@ const mascotaSchema = new Schema({
     age: String
 });
 
-// creación del modelo.
-const Mascota = model('Mascota',mascotaSchema);
 // exportar el modelo.
-module.exports = Mascota;
+module.exports =  model('Mascota',mascotaSchema);

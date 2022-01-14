@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const Mascota = require("../models/Mascota"); //llamar al modelo.
 
 // ----------- Rutas del Administrador de mascotas -----------

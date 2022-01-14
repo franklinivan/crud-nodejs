@@ -4,7 +4,7 @@ const express = require('express');
 const session = require('express-session');
 const flash = require('connect-flash');
 const app = express(); // express() es para utilizar todo lo que estamos requiriendo.
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 
 
 app.use(express.json()); // para leer información que viene en json desde el formulario.
@@ -43,4 +43,4 @@ app.use((_,res,next)=>{
 });
 
 // definición del puerto.
-app.listen(port,()=>console.log('escuchando en el puerto', port));
+app.listen(port,()=>console.log('Server on port', port));
